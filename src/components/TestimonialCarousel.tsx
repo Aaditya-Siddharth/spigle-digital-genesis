@@ -59,9 +59,9 @@ const TestimonialCarousel = ({ testimonials }: TestimonialCarouselProps) => {
   const testimonial = testimonials[currentIndex];
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-primary/5 to-secondary/5 rounded-2xl p-8 md:p-12 shadow-lg border border-white/20">
-      <div className="absolute top-4 right-6 text-secondary">
-        <Quote size={48} className="opacity-20" />
+    <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-50 to-white border border-gray-100 p-8 md:p-12 shadow-xl">
+      <div className="absolute top-10 right-10 text-secondary/10">
+        <Quote size={120} strokeWidth={0.5} />
       </div>
       
       <div className="h-[400px] relative flex flex-col justify-center">
@@ -74,40 +74,45 @@ const TestimonialCarousel = ({ testimonials }: TestimonialCarouselProps) => {
             animate="center"
             exit="exit"
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="absolute inset-0 flex flex-col md:flex-row items-center"
+            className="absolute inset-0 flex flex-col md:flex-row items-center gap-8 md:gap-16"
           >
-            <div className="w-full md:w-1/3 flex justify-center mb-8 md:mb-0">
+            <div className="w-full md:w-1/3 flex justify-center z-10">
               {testimonial.image ? (
-                <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-xl">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-full h-full object-cover"
-                  />
+                <div className="relative">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-full blur-lg opacity-50"></div>
+                  <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-xl">
+                    <img
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 </div>
               ) : (
-                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center border-4 border-white shadow-xl">
-                  <User size={48} className="text-secondary/50" />
+                <div className="w-28 h-28 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center border-4 border-white shadow-xl">
+                  <User size={40} className="text-primary/50" />
                 </div>
               )}
             </div>
-            <div className="w-full md:w-2/3 space-y-6 text-center md:text-left">
+            <div className="w-full md:w-2/3 space-y-6 text-center md:text-left z-10">
               <div className="flex justify-center md:justify-start">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    size={20}
+                    size={24}
                     fill={i < testimonial.rating ? "currentColor" : "none"}
-                    className="text-yellow-500"
+                    className="text-yellow-400"
                   />
                 ))}
               </div>
-              <blockquote className="text-xl md:text-2xl font-medium italic text-gray-700">
+              <blockquote className="text-xl md:text-2xl font-medium text-gray-700">
                 "{testimonial.quote}"
               </blockquote>
               <div>
-                <div className="font-bold text-lg text-primary">{testimonial.name}</div>
-                <div className="text-secondary">{testimonial.position}</div>
+                <div className="font-bold text-lg bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  {testimonial.name}
+                </div>
+                <div className="text-gray-500">{testimonial.position}</div>
               </div>
             </div>
           </motion.div>
@@ -122,8 +127,8 @@ const TestimonialCarousel = ({ testimonials }: TestimonialCarouselProps) => {
                 setCurrentIndex(index);
                 setAutoplay(false);
               }}
-              className={`w-3 h-3 rounded-full transition-all ${
-                index === currentIndex ? "bg-secondary w-8" : "bg-gray-300"
+              className={`w-10 h-1.5 rounded-full transition-all ${
+                index === currentIndex ? "bg-primary" : "bg-gray-200"
               }`}
               aria-label={`Go to testimonial ${index + 1}`}
             ></button>
@@ -131,11 +136,11 @@ const TestimonialCarousel = ({ testimonials }: TestimonialCarouselProps) => {
         </div>
       </div>
       
-      <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 flex justify-between px-4 pointer-events-none">
+      <div className="absolute top-1/2 left-4 right-4 -translate-y-1/2 flex justify-between pointer-events-none">
         <Button
           variant="outline"
           size="icon"
-          className="rounded-full bg-white/80 backdrop-blur-sm pointer-events-auto hover:bg-white"
+          className="rounded-full bg-white shadow-lg border-gray-200 pointer-events-auto hover:bg-gray-50 hover:border-primary/50"
           onClick={() => {
             goToPrev();
             setAutoplay(false);
@@ -147,7 +152,7 @@ const TestimonialCarousel = ({ testimonials }: TestimonialCarouselProps) => {
         <Button
           variant="outline"
           size="icon"
-          className="rounded-full bg-white/80 backdrop-blur-sm pointer-events-auto hover:bg-white"
+          className="rounded-full bg-white shadow-lg border-gray-200 pointer-events-auto hover:bg-gray-50 hover:border-primary/50"
           onClick={() => {
             goToNext();
             setAutoplay(false);

@@ -16,34 +16,47 @@ interface ServiceCardProps {
 const ServiceCard = ({ title, description, icon, link, imgUrl }: ServiceCardProps) => {
   return (
     <motion.div 
-      whileHover={{ y: -12, transition: { duration: 0.3 } }}
-      className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 flex flex-col h-full group"
+      whileHover={{ y: -8 }}
+      transition={{ type: "spring", stiffness: 300, damping: 15 }}
+      className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-50 shadow-xl border border-gray-100 hover:shadow-2xl hover:border-gray-200 h-full"
     >
       {imgUrl && (
-        <div className="w-full h-64 overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20 z-10" />
+        <div className="relative h-56 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-transparent z-10" />
           <img 
             src={imgUrl} 
             alt={title} 
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
           />
+          <div className="absolute top-4 left-4 z-20 p-3 bg-white/20 backdrop-blur-md rounded-2xl text-white">
+            {icon}
+          </div>
         </div>
       )}
-      <div className="p-8 flex flex-col flex-grow relative z-20">
-        <motion.div 
-          initial={{ scale: 1 }}
-          whileHover={{ scale: 1.1, rotate: 5 }}
-          transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          className="p-4 bg-gradient-to-br from-secondary/80 to-secondary rounded-2xl w-16 h-16 flex items-center justify-center mb-6 text-white shadow-md"
-        >
-          {icon}
-        </motion.div>
-        <h3 className="text-2xl font-bold mb-4 text-primary group-hover:text-secondary transition-colors">{title}</h3>
-        <p className="text-gray-600 mb-8 flex-grow">{description}</p>
-        <Link to={link} className="mt-auto">
-          <Button variant="outline" className="border-secondary text-secondary hover:bg-secondary hover:text-white group-hover:bg-secondary group-hover:text-white group flex items-center gap-2">
-            <span>Learn More</span>
-            <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-2" />
+      
+      <div className={`p-6 ${!imgUrl ? "pt-10" : ""} relative`}>
+        {!imgUrl && (
+          <div className="absolute -top-6 left-6">
+            <motion.div
+              whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.1 }}
+              transition={{ duration: 0.5 }}
+              className="p-4 bg-gradient-to-br from-primary to-secondary rounded-2xl text-white shadow-lg"
+            >
+              {icon}
+            </motion.div>
+          </div>
+        )}
+        
+        <h3 className="text-xl font-bold mb-3 mt-2 text-primary group-hover:text-secondary transition-all duration-300">{title}</h3>
+        <p className="text-gray-600 mb-6 text-sm">{description}</p>
+        
+        <Link to={link} className="inline-block">
+          <Button 
+            variant="ghost" 
+            className="group/btn p-0 h-auto hover:bg-transparent"
+          >
+            <span className="text-secondary font-medium group-hover/btn:pr-1 transition-all">Explore</span>
+            <ArrowRight size={18} className="ml-1 text-secondary transition-all duration-300 group-hover/btn:translate-x-2" />
           </Button>
         </Link>
       </div>

@@ -16,22 +16,24 @@ const clients: Client[] = [
 
 const ClientLogos = () => {
   return (
-    <section className="py-16 bg-gradient-to-r from-gray-50 to-gray-100">
-      <div className="container-custom mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-2xl md:text-3xl font-bold relative inline-block">
-            Trusted by Industry Leaders
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary transform -translate-y-2"></div>
+    <section className="py-16 bg-white">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+        className="container mx-auto px-4"
+      >
+        <div className="text-center mb-12">
+          <span className="inline-block px-3 py-1.5 bg-gray-100 text-gray-600 rounded-full text-sm mb-3">
+            Trusted Partners
+          </span>
+          <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            Companies that trust us
           </h2>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-items-center">
+        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
           {clients.map((client, index) => (
             <motion.div
               key={index}
@@ -39,18 +41,29 @@ const ClientLogos = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
               viewport={{ once: true }}
-              whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
-              className="w-full h-20 bg-white rounded-xl shadow-md flex items-center justify-center p-4 border border-gray-100"
+              whileHover={{ 
+                y: -5,
+                filter: "brightness(1.1)",
+                transition: { duration: 0.2 }
+              }}
+              className="group"
             >
-              {client.logo ? (
-                <img src={client.logo} alt={client.name} className="max-h-12" />
-              ) : (
-                <div className="text-lg font-bold text-gray-400">{client.name}</div>
-              )}
+              <div className="relative">
+                <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-lg blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative bg-white rounded-lg p-6 w-[150px] h-[80px] flex items-center justify-center">
+                  {client.logo ? (
+                    <img src={client.logo} alt={client.name} className="max-h-12 max-w-full grayscale group-hover:grayscale-0 transition-all duration-300" />
+                  ) : (
+                    <div className="text-lg font-bold text-gray-400 group-hover:text-primary transition-colors duration-300">
+                      {client.name}
+                    </div>
+                  )}
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
