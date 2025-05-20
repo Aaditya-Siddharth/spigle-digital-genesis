@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import ServiceCard from "@/components/ServiceCard";
 
 const Services = () => {
   const services = [
@@ -150,20 +151,35 @@ const Services = () => {
   return (
     <div className="pt-24 pb-16">
       {/* Hero Section */}
-      <section className="bg-primary text-white py-20">
-        <div className="container-custom mx-auto">
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-secondary/50 z-0"></div>
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1559251606-c623743a6d76')] bg-cover bg-center opacity-20 mix-blend-overlay"></div>
+        <div className="container-custom mx-auto relative z-10 py-24">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="max-w-3xl mx-auto text-center"
+            className="max-w-3xl mx-auto text-center text-white"
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h1>
-            <p className="text-xl opacity-90">
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-5xl md:text-6xl font-bold mb-6"
+            >
+              Our Services
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="text-xl opacity-90 leading-relaxed"
+            >
               Comprehensive digital solutions tailored to your unique business needs. We combine technical expertise with strategic thinking to deliver results that drive growth.
-            </p>
+            </motion.p>
           </motion.div>
         </div>
+        <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white to-transparent"></div>
       </section>
 
       {/* Services List */}
@@ -173,47 +189,17 @@ const Services = () => {
             variants={container}
             initial="hidden"
             animate="show"
-            className="grid grid-cols-1 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
             {services.map((service, index) => (
-              <motion.div 
-                key={service.id} 
-                variants={item}
-                className={`bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 card-hover ${
-                  index % 2 === 1 ? 'flex-row-reverse' : ''
-                }`}
-              >
-                <div className="grid grid-cols-1 lg:grid-cols-2">
-                  <div className="h-64 lg:h-auto overflow-hidden">
-                    <img 
-                      src={service.image} 
-                      alt={service.title} 
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                    />
-                  </div>
-                  <div className="p-8 flex flex-col">
-                    <div className="mb-4 text-secondary">{service.icon}</div>
-                    <h3 className="text-2xl font-bold mb-3 text-primary">{service.title}</h3>
-                    <p className="text-gray-600 mb-6">{service.description}</p>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
-                      {service.features.map((feature, i) => (
-                        <div key={i} className="flex items-center gap-2">
-                          <div className="w-2 h-2 rounded-full bg-secondary"></div>
-                          <span className="text-sm">{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    <div className="mt-auto">
-                      <Link to={`/services/${service.id}`}>
-                        <Button className="button-primary">
-                          Learn More <ArrowRight size={16} className="ml-1" />
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+              <motion.div key={service.id} variants={item}>
+                <ServiceCard 
+                  title={service.title}
+                  description={service.description}
+                  icon={service.icon}
+                  link={`/services/${service.id}`}
+                  imgUrl={service.image}
+                />
               </motion.div>
             ))}
           </motion.div>
@@ -224,7 +210,7 @@ const Services = () => {
       <section className="py-20 bg-gray-50">
         <div className="container-custom mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Agile Approach</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">Our Agile Approach</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               We believe in flexibility, collaboration, and delivering value every step of the way
             </p>
@@ -242,13 +228,13 @@ const Services = () => {
                 
                 <div className="mt-8">
                   <TabsContent value="discovery" className="animate-fade-in">
-                    <Card>
-                      <CardContent className="p-6">
-                        <h3 className="text-xl font-bold mb-4">1. Discovery & Understanding</h3>
-                        <p className="text-gray-700 mb-4">
+                    <Card className="border-t-4 border-t-secondary">
+                      <CardContent className="p-8">
+                        <h3 className="text-2xl font-bold mb-4 text-primary">1. Discovery & Understanding</h3>
+                        <p className="text-gray-700 mb-6 leading-relaxed">
                           We begin by deeply understanding your business goals, challenges, and vision. Through collaborative workshops and research, we identify opportunities and establish clear objectives for our partnership.
                         </p>
-                        <ul className="space-y-2">
+                        <ul className="space-y-3">
                           {[
                             "Stakeholder interviews and workshops",
                             "Market and competitor analysis",
@@ -270,13 +256,13 @@ const Services = () => {
                   </TabsContent>
                   
                   <TabsContent value="strategy" className="animate-fade-in">
-                    <Card>
-                      <CardContent className="p-6">
-                        <h3 className="text-xl font-bold mb-4">2. Strategic Planning</h3>
-                        <p className="text-gray-700 mb-4">
+                    <Card className="border-t-4 border-t-secondary">
+                      <CardContent className="p-8">
+                        <h3 className="text-2xl font-bold mb-4 text-primary">2. Strategic Planning</h3>
+                        <p className="text-gray-700 mb-6 leading-relaxed">
                           Based on our discoveries, we develop a comprehensive strategy that aligns with your business objectives. We create a roadmap with clear milestones, deliverables, and success metrics.
                         </p>
-                        <ul className="space-y-2">
+                        <ul className="space-y-3">
                           {[
                             "Solution architecture and design",
                             "Technology selection and evaluation",
@@ -298,13 +284,13 @@ const Services = () => {
                   </TabsContent>
                   
                   <TabsContent value="execution" className="animate-fade-in">
-                    <Card>
-                      <CardContent className="p-6">
-                        <h3 className="text-xl font-bold mb-4">3. Agile Execution</h3>
-                        <p className="text-gray-700 mb-4">
+                    <Card className="border-t-4 border-t-secondary">
+                      <CardContent className="p-8">
+                        <h3 className="text-2xl font-bold mb-4 text-primary">3. Agile Execution</h3>
+                        <p className="text-gray-700 mb-6 leading-relaxed">
                           We implement our strategy using agile methodologies, working in sprints to deliver incremental value. Regular check-ins and transparent communication ensure you're always informed and involved.
                         </p>
-                        <ul className="space-y-2">
+                        <ul className="space-y-3">
                           {[
                             "Iterative development and prototyping",
                             "Regular sprint reviews and demonstrations",
@@ -326,13 +312,13 @@ const Services = () => {
                   </TabsContent>
                   
                   <TabsContent value="evolution" className="animate-fade-in">
-                    <Card>
-                      <CardContent className="p-6">
-                        <h3 className="text-xl font-bold mb-4">4. Continuous Evolution</h3>
-                        <p className="text-gray-700 mb-4">
+                    <Card className="border-t-4 border-t-secondary">
+                      <CardContent className="p-8">
+                        <h3 className="text-2xl font-bold mb-4 text-primary">4. Continuous Evolution</h3>
+                        <p className="text-gray-700 mb-6 leading-relaxed">
                           Our relationship continues beyond project completion. We monitor performance, gather feedback, and make data-driven improvements to ensure your digital solutions evolve with your business.
                         </p>
-                        <ul className="space-y-2">
+                        <ul className="space-y-3">
                           {[
                             "Performance monitoring and analytics",
                             "User feedback collection and analysis",
@@ -358,48 +344,80 @@ const Services = () => {
             
             <div className="space-y-8">
               <div>
-                <h3 className="text-2xl font-bold mb-4">Our Expertise & Flexibility</h3>
-                <p className="text-gray-700">
+                <h3 className="text-2xl font-bold mb-4 text-primary">Our Expertise & Flexibility</h3>
+                <p className="text-gray-700 leading-relaxed">
                   At Spigle, we combine technical mastery with business acumen to deliver solutions that drive real results. Our versatile team adapts to your unique requirements, ensuring the perfect blend of innovation and practicality.
                 </p>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card className="bg-white shadow-sm border border-gray-100">
+                <motion.div 
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                  className="bg-white shadow-sm border border-gray-100 rounded-xl hover:shadow-md transition-all"
+                >
                   <CardContent className="p-6">
+                    <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary mb-3">
+                      <div className="w-5 h-5 rounded-full bg-secondary/30 flex items-center justify-center">
+                        <div className="w-2 h-2 rounded-full bg-secondary"></div>
+                      </div>
+                    </div>
                     <h4 className="font-bold mb-2">Multidisciplinary Teams</h4>
                     <p className="text-gray-600 text-sm">
                       Developers, designers, strategists, and analysts working in perfect harmony to solve complex challenges.
                     </p>
                   </CardContent>
-                </Card>
+                </motion.div>
                 
-                <Card className="bg-white shadow-sm border border-gray-100">
+                <motion.div 
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                  className="bg-white shadow-sm border border-gray-100 rounded-xl hover:shadow-md transition-all"
+                >
                   <CardContent className="p-6">
+                    <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary mb-3">
+                      <div className="w-5 h-5 rounded-full bg-secondary/30 flex items-center justify-center">
+                        <div className="w-2 h-2 rounded-full bg-secondary"></div>
+                      </div>
+                    </div>
                     <h4 className="font-bold mb-2">Technology Agnostic</h4>
                     <p className="text-gray-600 text-sm">
                       We select the best technologies for your specific needs, not what's trendy or convenient for us.
                     </p>
                   </CardContent>
-                </Card>
+                </motion.div>
                 
-                <Card className="bg-white shadow-sm border border-gray-100">
+                <motion.div 
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                  className="bg-white shadow-sm border border-gray-100 rounded-xl hover:shadow-md transition-all"
+                >
                   <CardContent className="p-6">
+                    <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary mb-3">
+                      <div className="w-5 h-5 rounded-full bg-secondary/30 flex items-center justify-center">
+                        <div className="w-2 h-2 rounded-full bg-secondary"></div>
+                      </div>
+                    </div>
                     <h4 className="font-bold mb-2">Flexible Engagement Models</h4>
                     <p className="text-gray-600 text-sm">
                       From fixed-price projects to dedicated teams, we adapt to your preferred way of working.
                     </p>
                   </CardContent>
-                </Card>
+                </motion.div>
                 
-                <Card className="bg-white shadow-sm border border-gray-100">
+                <motion.div 
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                  className="bg-white shadow-sm border border-gray-100 rounded-xl hover:shadow-md transition-all"
+                >
                   <CardContent className="p-6">
+                    <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary mb-3">
+                      <div className="w-5 h-5 rounded-full bg-secondary/30 flex items-center justify-center">
+                        <div className="w-2 h-2 rounded-full bg-secondary"></div>
+                      </div>
+                    </div>
                     <h4 className="font-bold mb-2">Scalable Resources</h4>
                     <p className="text-gray-600 text-sm">
                       We scale our team up or down based on your project requirements and timeline.
                     </p>
                   </CardContent>
-                </Card>
+                </motion.div>
               </div>
             </div>
           </div>
@@ -410,7 +428,7 @@ const Services = () => {
       <section className="py-20">
         <div className="container-custom mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Service FAQs</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">Service FAQs</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Common questions about our services and processes
             </p>
@@ -438,7 +456,7 @@ const Services = () => {
                   }
                 ].map((faq, index) => (
                   <AccordionItem key={index} value={`item-${index}`}>
-                    <AccordionTrigger className="text-left font-medium">
+                    <AccordionTrigger className="text-left font-medium hover:text-secondary">
                       {faq.question}
                     </AccordionTrigger>
                     <AccordionContent className="text-gray-700">
@@ -470,7 +488,7 @@ const Services = () => {
                   }
                 ].map((faq, index) => (
                   <AccordionItem key={index + 4} value={`item-${index + 4}`}>
-                    <AccordionTrigger className="text-left font-medium">
+                    <AccordionTrigger className="text-left font-medium hover:text-secondary">
                       {faq.question}
                     </AccordionTrigger>
                     <AccordionContent className="text-gray-700">
@@ -485,31 +503,39 @@ const Services = () => {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-20 bg-primary text-white">
-        <div className="container-custom mx-auto">
+      <section className="py-20 relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-90 z-0"></div>
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1531545514256-b1400bc00f31')] bg-cover bg-center opacity-20 mix-blend-overlay z-0"></div>
+        <div className="container-custom mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
+            <div className="text-white">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Business?</h2>
-              <p className="text-xl opacity-90 mb-8">
+              <p className="text-xl opacity-90 mb-8 leading-relaxed">
                 Let's discuss how our services can help you achieve your business goals. Fill out the form, and we'll get back to you within 24 hours.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white/10 p-6 rounded-lg">
+                <motion.div 
+                  whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+                  className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20"
+                >
                   <h3 className="text-xl font-bold mb-2">Start a Project</h3>
                   <p className="opacity-80">
                     Ready to begin? Let us know your requirements and timeline.
                   </p>
-                </div>
-                <div className="bg-white/10 p-6 rounded-lg">
+                </motion.div>
+                <motion.div 
+                  whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+                  className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20"
+                >
                   <h3 className="text-xl font-bold mb-2">Request a Consultation</h3>
                   <p className="opacity-80">
                     Not sure what you need? Book a free strategy session with our experts.
                   </p>
-                </div>
+                </motion.div>
               </div>
             </div>
             
-            <div className="bg-white rounded-xl p-8 shadow-lg">
+            <div className="bg-white rounded-xl p-8 shadow-xl">
               <form className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -567,7 +593,7 @@ const Services = () => {
                 </div>
                 
                 <Button className="w-full bg-primary hover:bg-primary/90 text-white font-semibold">
-                  Submit Request
+                  Submit Request <ArrowRight size={16} className="ml-2" />
                 </Button>
                 <p className="text-xs text-gray-600 text-center">
                   We respect your privacy. We'll never share your information.
